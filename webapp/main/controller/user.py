@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, orm
+from sqlalchemy import create_engine, orm, update
 from flask import jsonify, Blueprint, request
 from ..config.postgres import postgres
 from ..model.models import User
@@ -53,15 +53,18 @@ def delete_user():
     return jsonify({'message': 'A user was deleted.'}), 200
 
 
-@user_api.route('/patch', methods=['PATCH'])
+@user_api.route('/patch', methods=['POST'])
 def patch_user():
 
     dict_body = request.get_json()
+    print(dict_body)
+    user = User.query.filter_by(id=dict_body['id']).first()
+    print(user)
 
-    user = User(user=dict_body['name'],
-                created_on=dt)
+    updated_user = User(user=dict_body['name'],
+                        created_on=dt)
 
-    session.update(user)
+    session.merge(updated_user)
     session.commit()
     session.close()
     return jsonify({'message': 'A user was updated.'}), 200
