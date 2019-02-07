@@ -57,15 +57,15 @@ def delete_user():
     return jsonify({'message': 'A user was deleted.'}), 200
 
 
-@user_api.route('/patch', methods=['PUT'])
+@user_api.route('/patch', methods=['PATCH'])
 def patch_user():
 
     dict_body = request.get_json()
+    user_id = dict_body['id']
 
-    user = User.query.filter_by(id=dict_body['id']).first()
-
-    user.name = dict_body['name']
+    session.query(User).filter(User.id == user_id).update({'name': dict_body['name']})
 
     session.commit()
+    session.flush()
     session.close()
     return jsonify({'message': 'A user was updated.'}), 200
