@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, orm, update
+from sqlalchemy import create_engine, orm
 from flask import jsonify, Blueprint, request, json
 from ..config.postgres import postgres
 from ..model.models import User
@@ -29,7 +29,7 @@ def list_all_users():
 
     results = connection.execute("SELECT * FROM temp")
 
-    return json.dumps(users), 200
+    return json.dumps([user.to_dict() for user in User.query.all()]), 200
 
 
 @user_api.route('/add', methods=['POST'])
