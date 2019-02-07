@@ -23,6 +23,8 @@ dt = datetime.now()
 @user_api.route('/')
 def list_all_users():
 
+    users = User.query.all()
+
     results = connection.execute("SELECT * FROM temp")
 
     return jsonify([dict(row) for row in results]), 200
@@ -43,28 +45,24 @@ def add_user():
 
 @user_api.route('/delete', methods=['DELETE'])
 def delete_user():
-    user_id = User.query.first().id
+    user_id = request.args.get('id')
 
-    user = User.query.filter_by(id=user_id).first()
+    User.query.filter_by(id=user_id).delete()
 
-    session.delete(user)
     session.commit()
     session.close()
     return jsonify({'message': 'A user was deleted.'}), 200
 
 
-@user_api.route('/patch', methods=['POST'])
+@user_api.route('/patch', methods=['PUT'])
 def patch_user():
 
     dict_body = request.get_json()
-    print(dict_body)
+
     user = User.query.filter_by(id=dict_body['id']).first()
-    print(user)
 
-    updated_user = User(user=dict_body['name'],
-                        created_on=dt)
+    user.name = dict_body['name']
 
-    session.merge(updated_user)
     session.commit()
     session.close()
     return jsonify({'message': 'A user was updated.'}), 200
