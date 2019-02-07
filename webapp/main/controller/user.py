@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, orm, update
-from flask import jsonify, Blueprint, request
+from flask import jsonify, Blueprint, request, json
 from ..config.postgres import postgres
 from ..model.models import User
 from datetime import datetime
@@ -23,11 +23,13 @@ dt = datetime.now()
 @user_api.route('/')
 def list_all_users():
 
-    users = User.query.all()
+    users = session.query(User).all()
+
+    print(users)
 
     results = connection.execute("SELECT * FROM temp")
 
-    return jsonify([dict(row) for row in results]), 200
+    return json.dumps(users), 200
 
 
 @user_api.route('/add', methods=['POST'])
@@ -47,8 +49,9 @@ def add_user():
 def delete_user():
     user_id = request.args.get('id')
 
-    User.query.filter_by(id=user_id).delete()
+    user = session.query(User).filter(User.id == user_id).first()
 
+    session.delete(user)
     session.commit()
     session.close()
     return jsonify({'message': 'A user was deleted.'}), 200
