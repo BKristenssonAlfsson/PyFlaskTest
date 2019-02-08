@@ -1,14 +1,15 @@
-from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import String, Integer, DateTime, Column
 
-db = SQLAlchemy()
+Base = declarative_base()
 
 
-class User(db.Model):
+class User(Base):
     __tablename__ = 'temp'
 
-    id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(75), nullable=False)
-    created_on = db.Column(db.DateTime)
+    id = Column('id', Integer, primary_key=True, autoincrement=True)
+    name = Column(String(75), nullable=False)
+    created_on = Column(DateTime)
 
     def __init__(self, user, created_on):
         self.name = user

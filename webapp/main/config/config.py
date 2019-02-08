@@ -1,3 +1,5 @@
+from .postgres import postgres
+
 class Config(object):
     """
     Base configs
@@ -7,6 +9,8 @@ class Config(object):
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_ECHO = True
+    SQLALCHEMY_DATABASE_URI = postgres
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 
 class ProductionConfig(Config):

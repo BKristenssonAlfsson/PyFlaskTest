@@ -1,21 +1,9 @@
-from sqlalchemy import create_engine, orm
 from flask import jsonify, Blueprint, request, json
-from ..config.postgres import postgres
 from ..model.models import User
 from datetime import datetime
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
+from .. import session
 
 user_api = Blueprint('user_api', __name__)
-
-engine = create_engine(postgres)
-connection = engine.connect()
-
-Session = orm.sessionmaker(bind=engine)
-session = Session()
-
-Base.metadata.create_all(bind=engine)
 
 dt = datetime.now()
 
@@ -27,9 +15,7 @@ def list_all_users():
 
     print(users)
 
-    results = connection.execute("SELECT * FROM temp")
-
-    return json.dumps([user.to_dict() for user in User.query.all()]), 200
+    return users, 200
 
 
 @user_api.route('/add', methods=['POST'])
