@@ -2,6 +2,7 @@ from flask import jsonify, Blueprint, request, json
 from ..model.models import User
 from datetime import datetime
 from .. import session
+from ..config.JsonEncoder import JsonEncoder
 
 user_api = Blueprint('user_api', __name__)
 
@@ -13,9 +14,7 @@ def list_all_users():
 
     users = session.query(User).all()
 
-    print(users)
-
-    return users, 200
+    return (json.dumps(users, cls=JsonEncoder)), 200
 
 
 @user_api.route('/add', methods=['POST'])

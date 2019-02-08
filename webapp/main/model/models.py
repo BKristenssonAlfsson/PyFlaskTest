@@ -14,7 +14,6 @@ class User(Base):
     def __init__(self, user, created_on):
         self.name = user
         self.created_on = created_on
-        super(User, self).__init__()
 
     def __repr__(self):
         return '{} {} {}'.format(self.id, self.name, self.created_on)
