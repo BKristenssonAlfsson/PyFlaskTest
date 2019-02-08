@@ -2,7 +2,7 @@ from .config.postgres import postgres
 from sqlalchemy import create_engine, orm
 from flask import Flask
 from sqlalchemy.ext.declarative import declarative_base
-from webapp.main.model import models
+from webapp.main.model import user_model
 
 engine = create_engine(postgres)
 
