@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, Response
 from ..model.user_model import User
 from datetime import datetime
 from flask_restplus import Resource
@@ -51,6 +51,7 @@ class DeleteUser(Resource):
 
 
 @api.route('/patch')
+@api.response(404, "User not found")
 class UpdateUser(Resource):
     @api.marshal_list_with(user)
     def patch(self):
@@ -60,7 +61,10 @@ class UpdateUser(Resource):
 
         session.query(User).filter(User.id == user_id).update({'name': dict_body['name']})
 
+        response = Response({'User was updated'})
+
         session.commit()
         session.flush()
         session.close()
-        return ({'message': 'A user was updated.'}), 200
+
+        return response, 202
