@@ -1,12 +1,12 @@
-from flask_restplus import Api
 from flask import Blueprint
+from flask_restplus import Api
 
-from .main.controller.user_controller import user_api as ua
+from .main.controller.user_controller import api as user
 
-blueprint = Blueprint('user_api', __name__, url_prefix='/user_api')
+blueprint = Blueprint('user', __name__)
 
 api = Api(blueprint,
-          title="End point setup",
-          description="Join the Empire, they have cookies!")
+          title="Imperial REST service.",
+          description='Filty rebelscum should not be here')
 
-api.add_namespace(ua, path='/test')
+api.add_namespace(user, path='/user')
