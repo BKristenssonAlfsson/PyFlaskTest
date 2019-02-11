@@ -9,4 +9,5 @@ api = Api(blueprint,
           title="Imperial REST service.",
           description='Join the Empire. You know you want to!')
 
+'# Add more namespaces for other paths here'
 api.add_namespace(user, path='/user')
