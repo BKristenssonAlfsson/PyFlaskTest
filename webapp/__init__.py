@@ -7,6 +7,6 @@ blueprint = Blueprint('user', __name__)
 
 api = Api(blueprint,
           title="Imperial REST service.",
-          description='Filty rebelscum should not be here')
+          description='Join the Empire. You know you want to!')
 
 api.add_namespace(user, path='/user')

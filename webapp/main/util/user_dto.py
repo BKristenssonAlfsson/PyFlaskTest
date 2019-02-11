@@ -3,7 +3,7 @@ from flask_restplus import Namespace, fields
 
 class UserDto:
 
-    api = Namespace('user', description='Join the Empire. We have cookies!')
+    api = Namespace('user', description='Signup roster for cadets!')
 
     user = api.model('user', {
         'id': fields.Integer(description='User id. Is auto incremented'),

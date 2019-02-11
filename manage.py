@@ -1,7 +1,6 @@
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from webapp.main.config.config import app_config
-from webapp import blueprint
 from webapp.main import engine, create_app
 from webapp import blueprint
 
