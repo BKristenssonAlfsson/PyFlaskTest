@@ -28,7 +28,7 @@ class AddUser(Resource):
     def post(self):
         dict_body = request.get_json()
         dt = datetime.now()
-        
+
         user_to_add = User(user=dict_body['name'],
                            created_on=dt)
 
