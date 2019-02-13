@@ -4,11 +4,13 @@ from datetime import datetime
 from flask_restplus import Resource
 from .. import session
 from ..util.user_dto import UserDto
+from celery import Celery
 
 api = UserDto.api
 user = UserDto.user
 
-dt = datetime.now()
+app = Celery(broker='pyamqp://guest@localhost//')
+
 
 @api.route('/')
 class AllUsers(Resource):
@@ -25,13 +27,17 @@ class AddUser(Resource):
     @api.marshal_list_with(user)
     def post(self):
         dict_body = request.get_json()
-
+        dt = datetime.now()
+        
         user_to_add = User(user=dict_body['name'],
                            created_on=dt)
 
         session.add(user_to_add)
         session.commit()
+        app.send_task('cms.tasks.tasks.enrollment', kwargs={"name": user_to_add.name,
+                                                            "timestamp": user_to_add.created_on})
         session.close()
+
         return ({'message': 'New user was added.'}), 200
 
 
