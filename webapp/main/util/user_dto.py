@@ -8,5 +8,6 @@ class UserDto:
     user = api.model('user', {
         'id': fields.Integer(description='User id. Is auto incremented'),
         'name': fields.String(required=True, description='The name of the apprentice'),
-        'created_on': fields.DateTime(description='Imperial join date')
+        'created_on': fields.DateTime(description='Imperial join date'),
+        'role': fields.String(required=True, description='Type of soldier')
     })

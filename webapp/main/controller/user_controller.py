@@ -30,7 +30,8 @@ class AddUser(Resource):
         dt = datetime.now()
 
         user_to_add = User(user=dict_body['name'],
-                           created_on=dt)
+                           created_on=dt,
+                           role=dict_body['role'])
 
         session.add(user_to_add)
         session.commit()
