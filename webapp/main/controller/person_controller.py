@@ -1,13 +1,14 @@
 from flask import request, Response
-from ..model.user_model import User
+from ..model.person_model import Person
+from ..model.role_model import Role
 from datetime import datetime
 from flask_restplus import Resource
 from .. import session
-from ..util.user_dto import UserDto
+from ..util.person_dto import PersonDto
 from celery import Celery
 
-api = UserDto.api
-user = UserDto.user
+api = PersonDto.api
+user = PersonDto.user
 
 app = Celery(broker='pyamqp://guest@localhost//')
 
@@ -17,7 +18,9 @@ class AllUsers(Resource):
     @api.marshal_list_with(user)
     def get(self):
 
-        users = session.query(User).all()
+        users = session.query(Person.name, Person.created_on, Role.role).filter(Person.role == Role.id).all()
+        #users = session.query(Person).join(Role).filter(Person.role == Role.id).all()
+        #users = session.query(User).all()
 
         return users, 200
 
@@ -29,9 +32,9 @@ class AddUser(Resource):
         dict_body = request.get_json()
         dt = datetime.now()
 
-        user_to_add = User(user=dict_body['name'],
-                           created_on=dt,
-                           role=dict_body['role'])
+        user_to_add = Person(user=dict_body['name'],
+                             created_on=dt,
+                             role=dict_body['role'])
 
         session.add(user_to_add)
         session.commit()
@@ -49,7 +52,7 @@ class DeleteUser(Resource):
 
         user_id = request.args.get('id')
 
-        user_to_delete = session.query(User).filter(User.id == user_id).first()
+        user_to_delete = session.query(Person).filter(Person.id == user_id).first()
 
         session.delete(user_to_delete)
         session.commit()
@@ -66,7 +69,7 @@ class UpdateUser(Resource):
         dict_body = request.get_json()
         user_id = dict_body['id']
 
-        session.query(User).filter(User.id == user_id).update({'name': dict_body['name']})
+        session.query(Person).filter(Person.id == user_id).update({'name': dict_body['name']})
 
         response = Response({'User was updated'})
 

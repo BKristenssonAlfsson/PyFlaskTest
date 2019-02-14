@@ -1,7 +1,7 @@
 from flask_restplus import Namespace, fields
 
 
-class UserDto:
+class PersonDto:
 
     api = Namespace('user', description='Signup roster for cadets!')
 
@@ -9,5 +9,5 @@ class UserDto:
         'id': fields.Integer(description='User id. Is auto incremented'),
         'name': fields.String(required=True, description='The name of the apprentice'),
         'created_on': fields.DateTime(description='Imperial join date'),
-        'role': fields.String(required=True, description='Type of soldier')
+        'role': fields.Integer(required=True, description='Type of soldier')
     })

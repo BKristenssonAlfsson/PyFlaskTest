@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask_restplus import Api
 
-from .main.controller.user_controller import api as user
+from .main.controller.person_controller import api as user
 from .main.controller.role_controller import api as role
 
 blueprint = Blueprint('api', __name__, url_prefix='/api')
