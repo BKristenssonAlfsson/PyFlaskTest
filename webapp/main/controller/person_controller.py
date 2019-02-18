@@ -9,18 +9,19 @@ from celery import Celery
 
 api = PersonDto.api
 user = PersonDto.user
+test = PersonDto.test
+
 
 app = Celery(broker='pyamqp://guest@localhost//')
 
 
 @api.route('/')
 class AllUsers(Resource):
-    @api.marshal_list_with(user)
+    @api.marshal_list_with(test)
     def get(self):
 
         users = session.query(Person, Role.role).join(Role).all()
         print(str(users))
-#        users = session.query(Person).all()
 
         return users, 200
 

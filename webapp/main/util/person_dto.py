@@ -11,3 +11,13 @@ class PersonDto:
         'created_on': fields.DateTime(description='Imperial join date'),
         'role': fields.Integer(required=True, description='Type of soldier')
     })
+
+    role = api.model('role', {
+        'role': fields.String()
+    })
+
+    test = api.model('test', {
+        'name': fields.String(description='Name of person'),
+        'created_on': fields.DateTime(description='Joined the army'),
+        'role': fields.String(attribute='role.role', description='Trooper type')
+    })
