@@ -18,8 +18,9 @@ class AllUsers(Resource):
     @api.marshal_list_with(user)
     def get(self):
 
-        #users = session.query(Person).join(Role.role).filter(Person.role == Role.id).all()
-        users = session.query(Person).all()
+        users = session.query(Person, Role.role).join(Role).all()
+        print(str(users))
+#        users = session.query(Person).all()
 
         return users, 200
 

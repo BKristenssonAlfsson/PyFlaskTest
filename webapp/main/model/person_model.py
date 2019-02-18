@@ -1,5 +1,6 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import String, Integer, DateTime, Column, ForeignKey
+from .role_model import Role
 
 Base = declarative_base()
 
@@ -10,7 +11,7 @@ class Person(Base):
     id = Column('id', Integer, primary_key=True, autoincrement=True)
     name = Column(String(75), nullable=False)
     created_on = Column(DateTime)
-    role = Column(Integer, nullable=False)
+    role = Column(Integer, ForeignKey(Role.id), nullable=False)
 
     def __init__(self, user, created_on, role):
         self.name = user
