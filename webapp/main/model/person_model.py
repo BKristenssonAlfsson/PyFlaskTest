@@ -1,8 +1,6 @@
-from sqlalchemy.ext.declarative import declarative_base
+from .. import Base
 from sqlalchemy import String, Integer, DateTime, Column, ForeignKey
 from .role_model import Role
-
-Base = declarative_base()
 
 
 class Person(Base):

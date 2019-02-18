@@ -2,9 +2,6 @@ from .config.postgres import postgres
 from sqlalchemy import create_engine, orm
 from flask import Flask
 from sqlalchemy.ext.declarative import declarative_base
-from webapp.main.model import person_model
-from .model.person_model import Person
-from .model.role_model import Role
 
 engine = create_engine(postgres)
 
