@@ -9,3 +9,7 @@ class RoleDto:
         'id': fields.Integer(description='User id. Is auto incremented'),
         'role': fields.String(required=True, description='Type of soldier'),
      })
+
+    trooper = api.model('role', {
+        'role': fields.String(required=True, description='Type of soldier')
+    })

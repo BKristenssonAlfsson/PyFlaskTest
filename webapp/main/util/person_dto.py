@@ -1,4 +1,7 @@
 from flask_restplus import Namespace, fields
+from .role_dto import RoleDto
+
+trooper = RoleDto.trooper
 
 
 class PersonDto:
@@ -12,12 +15,8 @@ class PersonDto:
         'role': fields.Integer(required=True, description='Type of soldier')
     })
 
-    role = api.model('role', {
-        'role': fields.String()
-    })
-
     test = api.model('test', {
         'name': fields.String(description='Name of person'),
         'created_on': fields.DateTime(description='Joined the army'),
-        'role': fields.String(attribute='role.role', description='Trooper type')
+        'trooper': fields.String(trooper)
     })
