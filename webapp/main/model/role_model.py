@@ -12,4 +12,4 @@ class Role(Base):
         self.role = role
 
     def __repr__(self):
-        return '{} {}'.format(self.id, self.role)
+        return '{}'.format(self.role)

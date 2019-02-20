@@ -10,6 +10,6 @@ class RoleDto:
         'role': fields.String(required=True, description='Type of soldier'),
      })
 
-    trooper = api.model('role', {
-        'role': fields.String(required=True, description='Type of soldier')
+    trooper = api.model('trooper', {
+        'trooper': fields.String(required=True, description='Type of soldier')
     })

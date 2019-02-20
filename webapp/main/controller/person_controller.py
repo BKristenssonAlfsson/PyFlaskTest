@@ -20,8 +20,7 @@ class AllUsers(Resource):
     @api.marshal_list_with(test)
     def get(self):
         users = session.query(Person, Role.role).join(Role).all()
-        print(session.query(Person.name, Person.created_on, Role.role).join(Role))
-        print(users)
+        
         return users, 200
 
 

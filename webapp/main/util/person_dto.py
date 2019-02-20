@@ -18,5 +18,5 @@ class PersonDto:
     test = api.model('test', {
         'name': fields.String(description='Name of person'),
         'created_on': fields.DateTime(description='Joined the army'),
-        'trooper': fields.String(trooper)
+        'trooper': fields.String(trooper, uselist=False)
     })
