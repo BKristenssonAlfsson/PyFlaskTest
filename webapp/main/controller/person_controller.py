@@ -19,8 +19,8 @@ app = Celery(broker='pyamqp://guest@localhost//')
 class AllUsers(Resource):
     @api.marshal_list_with(test)
     def get(self):
-        users = session.query(Person, Role.role).join(Role).all()
-        
+        users = session.query(Person, Role).filter(Person.role == Role.id).all()
+
         return users, 200
 
 
@@ -38,7 +38,8 @@ class AddUser(Resource):
         session.add(user_to_add)
         session.commit()
         app.send_task('cms.tasks.tasks.enrollment', kwargs={"name": user_to_add.name,
-                                                            "timestamp": user_to_add.created_on})
+                                                            "timestamp": user_to_add.created_on,
+                                                            "role": user_to_add.role})
         session.close()
 
         return ({'message': 'New user was added.'}), 200
