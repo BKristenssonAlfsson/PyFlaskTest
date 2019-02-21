@@ -19,8 +19,7 @@ app = Celery(broker='pyamqp://guest@localhost//')
 class AllUsers(Resource):
     @api.marshal_list_with(test)
     def get(self):
-        users = session.query(Person).filter(Person.role == Role.id).all()
-
+        users = session.query(Person).join(Role).all()
         return users, 200
 
 
